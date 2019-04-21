@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.CalendarActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/toolbar"
+        android:background="@color/colorPrimary"
+        >
+        <ImageView
+            android:id="@+id/img_back"
+            android:src="@drawable/back"
+            android:layout_width="30dp"
+            android:layout_height="30dp" />
+        <TextView
+            android:paddingLeft="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="选择日期"
+            android:textSize="20dp"
+            />
+    </android.support.v7.widget.Toolbar>
+
+    <com.prolificinteractive.materialcalendarview.MaterialCalendarView
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:id="@+id/mcv"
+        ></com.prolificinteractive.materialcalendarview.MaterialCalendarView>
+
+    <TextView
+        android:layout_marginTop="20dp"
+        android:id="@+id/tv_ok"
+        android:paddingRight="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="确定"
+        android:gravity="right"
+        />
+
+</LinearLayout>
