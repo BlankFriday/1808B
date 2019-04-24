@@ -34,6 +34,7 @@ public class V2exListFragment extends BaseFragment<EmptyView,EmptyPresenter> imp
     @BindView(R.id.recv_v2ex)
     RecyclerView mRecv;
     private RlvV2exAdapter adapter;
+    private String text;
 
     @SuppressLint("ValidFragment")
     public V2exListFragment(String linkHref) {
@@ -83,9 +84,11 @@ public class V2exListFragment extends BaseFragment<EmptyView,EmptyPresenter> imp
 
                     //新闻主题信息
                     Element titleEl = element.select("table tbody tr td span.item_title > a").first();
-                    String text = titleEl.text();//标题
-                   // Log.i(TAG, "标题: "+text);
-
+                    if (titleEl!=null){
+                        //标题
+                        text = titleEl.text();
+                        // Log.i(TAG, "标题: "+text);
+                    }
 
                     //评论信息
                     Elements topicEl = element.select("table tbody tr td span.topic_info");

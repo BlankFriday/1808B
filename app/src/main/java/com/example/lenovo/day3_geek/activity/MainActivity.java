@@ -1,17 +1,19 @@
 package com.example.lenovo.day3_geek.activity;
 //卫晨旭  1808D
 
+import android.content.DialogInterface;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,15 +22,17 @@ import android.widget.LinearLayout;
 
 import com.example.lenovo.day3_geek.R;
 import com.example.lenovo.day3_geek.base.BaseActivity;
+import com.example.lenovo.day3_geek.base.Constants;
 import com.example.lenovo.day3_geek.fragment.AboutFragment;
 import com.example.lenovo.day3_geek.fragment.CollectFragment;
-import com.example.lenovo.day3_geek.fragment.GankFragment;
+import com.example.lenovo.day3_geek.fragment.GankListFragment;
 import com.example.lenovo.day3_geek.fragment.GoldFragment;
 import com.example.lenovo.day3_geek.fragment.SettingFragment;
 import com.example.lenovo.day3_geek.fragment.V2exFragment;
 import com.example.lenovo.day3_geek.fragment.WeChatFragment;
 import com.example.lenovo.day3_geek.fragment.ZhiHuDailyNewsFragment;
 import com.example.lenovo.day3_geek.presenter.MainPresenter;
+import com.example.lenovo.day3_geek.utils.SpUtil;
 import com.example.lenovo.day3_geek.utils.ToastUtil;
 import com.example.lenovo.day3_geek.view.MainView;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
@@ -38,7 +42,6 @@ import org.greenrobot.eventbus.EventBus;
 import java.util.ArrayList;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 public class MainActivity extends BaseActivity<MainView, MainPresenter> implements MainView {
 
@@ -64,10 +67,36 @@ public class MainActivity extends BaseActivity<MainView, MainPresenter> implemen
     private int TYPE_GOLD = 3;
     private int TYPE_V2EX = 4;
     private int TYPE_COLLECT = 5;
-    private int TYPE_SETTING = 6;
+    public static int TYPE_SETTING = 6;
     private int TYPE_ABOUT = 7;
     private int mLastFragmentPosition;
     private MenuItem mSearchItem;
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        //点击返回键
+        if(keyCode==KeyEvent.KEYCODE_BACK){
+            //声明弹出对象并初始化
+            AlertDialog.Builder builder=new AlertDialog.Builder(this);
+            builder.setTitle("提示：");
+            builder.setMessage("是否退出?");
+            //设置确定按钮
+            builder.setNegativeButton("确定", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    finish();
+                }
+            });
+            //设置取消按钮
+            builder.setPositiveButton("取消",null);
+            //显示弹窗
+            builder.show();
+        }
+        return super.onKeyDown(keyCode,event);
+    }
+
+
+
 
     @Override
     protected MainPresenter initPresenter() {
@@ -117,9 +146,11 @@ public class MainActivity extends BaseActivity<MainView, MainPresenter> implemen
     }
 
     private void addZhiHuDailyNewsFragment() {
+        //如果是因为切换日夜间模式导致activity重建,需要直接进入设置Fragment
+        int type = (int) SpUtil.getParam(Constants.DAY_NIGHT_FRAGMENT_POS, TYPE_ZHIHU);
         toolbar.setTitle(titles.get(0));
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.add(R.id.fram_container, fragments.get(0));
+        transaction.add(R.id.fram_container, fragments.get(type));
         transaction.commit();
 
     }
@@ -140,7 +171,7 @@ public class MainActivity extends BaseActivity<MainView, MainPresenter> implemen
         fragments = new ArrayList<>();
         fragments.add(new ZhiHuDailyNewsFragment());
         fragments.add(new WeChatFragment());
-        fragments.add(new GankFragment());
+        fragments.add(new GankListFragment());
         fragments.add(new GoldFragment());
         fragments.add(new V2exFragment());
         fragments.add(new CollectFragment());

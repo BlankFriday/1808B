@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.example.lenovo.day3_geek.R;
 import com.example.lenovo.day3_geek.activity.CalendarActivity;
+import com.example.lenovo.day3_geek.activity.MaterialActivity;
 import com.example.lenovo.day3_geek.adapter.RlvDailyNewsAdapter;
 import com.example.lenovo.day3_geek.base.BaseFragment;
 import com.example.lenovo.day3_geek.base.BasePresenter;
@@ -74,6 +75,14 @@ public class DailyNewsFragment extends BaseFragment <DailyNewsView,DailyNewsPres
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getContext(),CalendarActivity.class));
+            }
+        });
+
+        adapter.setItemOnClick(new RlvDailyNewsAdapter.ItemOnClick() {
+            @Override
+            public void onClick(int position, DailyNewsBean.StoriesBean bean) {
+                startActivity(new Intent(getContext(),MaterialActivity.class));
+                EventBus.getDefault().postSticky(bean);
             }
         });
     }

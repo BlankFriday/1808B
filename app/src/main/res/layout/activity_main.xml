@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@color/c_white"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/dl"
@@ -37,6 +38,7 @@
     </LinearLayout>
     <!--抽屉菜单-->
     <android.support.design.widget.NavigationView
+        android:background="@color/c_white"
         app:itemBackground="@drawable/bg_drawer_menu"
         android:layout_gravity="left"
         android:id="@+id/nav"

@@ -47,7 +47,7 @@ public class RlvV2exAdapter extends RecyclerView.Adapter {
         vh.tv_count.setText(bean.getCommentCount());
         vh.tv_tab.setText(bean.getTab());
         vh.tv_topic.setText(bean.getTopic());
-        Glide.with(context).load("https://"+bean.getImg()).into(vh.img);
+        Glide.with(context).load("https:"+bean.getImg()).into(vh.img);
     }
 
     @Override

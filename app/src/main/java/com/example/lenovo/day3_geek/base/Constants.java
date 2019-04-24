@@ -26,4 +26,7 @@ public interface Constants {
     //夜间模式
     String MODE = "mode";
     String NIGHT_CURRENT_FRAG_POS = "fragment_pos";
+
+    //保存设置日夜间模式时碎片的position
+    String DAY_NIGHT_FRAGMENT_POS = "day_night_fragment_pos";
 }

@@ -32,6 +32,7 @@ public class RlvDailyNewsAdapter extends RecyclerView.Adapter {
     private int TYPE_DATE = 1;
     private int TYPE_NEWS = 2;
 
+
     public RlvDailyNewsAdapter(ArrayList<DailyNewsBean.StoriesBean> newList, ArrayList<DailyNewsBean.TopStoriesBean> banners, Context context) {
         this.newList = newList;
         this.banners = banners;
@@ -85,8 +86,18 @@ public class RlvDailyNewsAdapter extends RecyclerView.Adapter {
             if (banners.size()>0){
                 newPoisition -= 1;
             }
-            newsHolder.tv_title.setText(newList.get(newPoisition).getTitle());
-            Glide.with(context).load(newList.get(newPoisition).getImages().get(0)).into(newsHolder.img);
+            final DailyNewsBean.StoriesBean bean = newList.get(newPoisition);
+            newsHolder.tv_title.setText(bean.getTitle());
+            Glide.with(context).load(bean.getImages().get(0)).into(newsHolder.img);
+            final int finalNewPoisition = newPoisition;
+            newsHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (itemOnClick!=null){
+                        itemOnClick.onClick(finalNewPoisition,bean);
+                    }
+                }
+            });
         }
     }
 
@@ -147,5 +158,15 @@ public class RlvDailyNewsAdapter extends RecyclerView.Adapter {
             super(itemView);
             ButterKnife.bind(this,itemView);
         }
+    }
+
+    private ItemOnClick itemOnClick;
+
+    public void setItemOnClick(ItemOnClick itemOnClick) {
+        this.itemOnClick = itemOnClick;
+    }
+
+    public interface ItemOnClick{
+        void onClick(int position,DailyNewsBean.StoriesBean bean);
     }
 }
